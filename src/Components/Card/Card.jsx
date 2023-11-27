@@ -11,7 +11,7 @@ function Card() {
           alt="Card image top"
         />
         <div className="card-body">
-          <h5 className="card-title">Card title</h5>
+          <h5 className="card-title">Card titles</h5>
           <p className="card-text">This is some important text</p>
           <div>
             <select className="m-2 h-100 bg-success rounded">
