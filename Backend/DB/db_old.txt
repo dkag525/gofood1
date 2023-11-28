@@ -7,17 +7,11 @@ const mongodb = async () => {
   try {
     await mongoose.connect(mongodbURL);
     console.log("Connected to MongoDB");
-
-    // Use mongoose.model to create a model for the "food_items" collection
-    const FoodItem = mongoose.model(
-      "FoodItem",
-      new mongoose.Schema({}),
-      "food_items"
-    );
-
-    // Use the model to find all documents in the collection
-    const data = await FoodItem.find({});
-    console.log(data);
+    const fetched_data = await mongoose.connection.db.collection("food_items");
+    fetched_data.find({}).toArray(function (err, data) {
+      if (err) console.log(err);
+      else console.log(data);
+    });
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
   }
