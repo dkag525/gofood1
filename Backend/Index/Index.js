@@ -4,8 +4,11 @@ const express = require("express");
 const app = express();
 const port = 5000;
 
+// Use this line for get Data from mongodb database
 const mongodb = require("../DB/db");
 mongodb();
+
+//  To Print Hello world
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });

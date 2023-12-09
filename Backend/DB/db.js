@@ -10,7 +10,7 @@ const mongodb = async () => {
 
     // Use mongoose.model to create a model for the "food_items" collection
     const FoodItem = mongoose.model(
-      "FoodItem",
+      "fooditem",
       new mongoose.Schema({}),
       "food_items"
     );
