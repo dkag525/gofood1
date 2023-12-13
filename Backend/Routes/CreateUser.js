@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const { body, validationResult } = require("express-validator"); // Import 'body' function
+
 const User = require("../Models/User/User");
-const { query, validationResult } = require("express-validator");
 
 router.post(
   "/CreateUser",
   [
-    body("email").isEmail(),
-    body("name").isEmail(),
+    body("email").isEmail(), // req.body.email()
+    body("name").notEmpty(), // Change 'isEmail' to 'notEmpty' for the 'name' field
     body("password", "Incorrect Password").isLength({ min: 5 }),
   ],
 
