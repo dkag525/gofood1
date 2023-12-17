@@ -7,11 +7,10 @@ const User = require("../Models/User/User");
 router.post(
   "/CreateUser",
   [
-    body("email").isEmail(), // req.body.email()
-    body("name").notEmpty(), // Change 'isEmail' to 'notEmpty' for the 'name' field
+    body("email", "Incorrect Email").isEmail(),
+    body("name", "Fill the name").notEmpty(),
     body("password", "Incorrect Password").isLength({ min: 5 }),
   ],
-
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -26,6 +25,40 @@ router.post(
         location: req.body.location,
       });
       res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false });
+    }
+  }
+);
+
+router.post(
+  "/LoginUser",
+  [
+    body("email", "Incorrect Email").isEmail(),
+    body("password", "Incorrect Password").isLength({ min: 5 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    let email = req.body.email;
+    try {
+      let userData = await User.findOne({ email });
+      if (!userData) {
+        return res
+          .status(400)
+          .json({ errors: "Try logging in with correct credentials" });
+      }
+      if (req.body.password !== userData.password) {
+        // Corrected this line
+        return res
+          .status(400)
+          .json({ errors: "Try logging in with correct credentials" });
+      }
+      return res.json({ success: true });
     } catch (error) {
       console.log(error);
       res.json({ success: false });
