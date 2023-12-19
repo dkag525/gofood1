@@ -17,7 +17,8 @@ const mongodb = async () => {
 
     // Use the model to find all documents in the collection
     const data = await FoodItem.find({});
-    console.log();
+    global.food_items = data;
+    // console.log(global.food_items);
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
   }
